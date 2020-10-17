@@ -1,15 +1,23 @@
-import { IEpisode } from "./episode";
+import { IPodcast } from "./podcast";
 
-enum PlayerActionType {
+export enum PlayerActionType {
     play = "play",
-    pause = "pause"
+    pause = "pause",
+    update = "update"
 }
 
-export type IPlayerAction = {
-    type: PlayerActionType
+export interface IPlayerAction {
+    type: PlayerActionType,
+    payload?: {
+        currentShowId?: string | null,
+        currentEpisode?: IPodcast | null,
+        episodes?: IPodcast[] | null 
+    }
 }
 
-export type IPlayer = {
-    episode: IEpisode | {},
-    media: number
+export interface IPlayer {
+    currentShowId: string | null,
+    currentEpisode: IPodcast | null,
+    episodes: IPodcast[] | null,
+    media: boolean
 }

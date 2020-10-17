@@ -1,4 +1,4 @@
-type IEpisodeApi = {
+export interface IEpisodeApi {
     episode_id: string,
     type: string,
     title: string,
@@ -10,18 +10,4 @@ type IEpisodeApi = {
     image_original_url: string,
     published_at: Date,
     download_enabled: boolean
-}
-
-export type IEpisodesApiResponse = {
-    response: {
-        items: IEpisodeApi[],
-        next_url?: string
-    }
-}
-
-export type IEpisode = {
-    episodeId: string,
-    authorId: string,
-    title: string,
-    imageUrl: string
 }
