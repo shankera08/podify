@@ -14,5 +14,5 @@ export interface IPodcast {
 }
 
 export interface ICuratedPodcasts {
-  [category: string]: undefined | IPodcast[];
+  [category: string]: IPodcast[] | undefined;
 }

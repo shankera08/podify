@@ -14,9 +14,9 @@ import "./App.css";
 
 function App() {
   const [curatedList, setCuratedList] = useState<IPodcast[] | null>(null);
-  const [curatedShows, setCuratedShows] = useState<ICuratedPodcasts | null>(
-    null
-  );
+  const [curatedShows, setCuratedShows] = useState<
+    (ICuratedPodcasts | null)[] | null
+  >(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,26 +31,19 @@ function App() {
 
   useEffect(() => {
     if (curatedList) {
-      let shows: ICuratedPodcasts | null = null;
+      const showsPromise = curatedList.map((category) =>
+        getShows(category.id, category.title, 10)
+      );
 
-      for (let i = 0; i < curatedList.length; i++) {
-        getShows(curatedList[i].id, 20)
-          .then((showsList) => {
-            if (showsList) {
-              shows = { ...shows, [curatedList[i].title]: showsList };
-              if (i === curatedList.length - 1) {
-                setCuratedShows(shows);
-              }
-
-              return shows;
-            } else {
-              return null;
-            }
-          })
-          .catch((error) => {
-            throw error;
-          });
-      }
+      Promise.all(showsPromise)
+        .then((curated) => {
+          if (curated) {
+            setCuratedShows(curated);
+          }
+        })
+        .catch((error) => {
+          throw error;
+        });
     }
   }, [curatedList]);
 
@@ -59,19 +52,25 @@ function App() {
       <header className="App-header">Podify - The Podcast App</header>
       <div className="podcast-curated" ref={modalRef}>
         {curatedShows &&
-          Object.keys(curatedShows).map((title: string) => {
-            if (curatedShows[title]) {
-              const show = curatedShows[title];
-              if (show) {
+          curatedShows.map((show: ICuratedPodcasts | null) => {
+            if (show) {
+              const showTitle = Object.keys(show)[0];
+              const podcasts = show[showTitle];
+
+              if (podcasts) {
                 return (
                   <div className="category">
-                    <div className="category__title">{title}</div>
-                    <div className="category-podcasts">{Podcasts(show)}</div>
+                    <div className="category__title">{showTitle}</div>
+                    <div className="category-podcasts">
+                      {Podcasts(podcasts)}
+                    </div>
                   </div>
                 );
               } else {
                 return null;
               }
+            } else {
+              return null;
             }
           })}
       </div>
