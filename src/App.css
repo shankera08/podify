@@ -28,13 +28,17 @@
   flex-direction: row;
 }
 
-.podcast-episodes {
+.category-podcast__container {
   display: flex;
   flex-direction: row;
-  background-color: coral;
+  overflow: auto;
 }
 
-.player {
-  display: flex;
-  background-color: black;
+.category__title {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+  background-color: skyblue;
+  border-color: black;
+  border-style: double;
 }

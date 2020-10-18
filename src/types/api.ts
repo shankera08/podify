@@ -7,8 +7,8 @@ interface IApiItems extends IEpisodeApi {}
 interface IApiItems extends IShowApi {}
 
 export interface IApiResponse {
-    response: {
-        items: IApiItems[],
-        next_url?: string | null
-    }
+  response: {
+    items: IApiItems[];
+    next_url?: string | null;
+  };
 }
