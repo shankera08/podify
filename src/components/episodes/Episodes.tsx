@@ -5,7 +5,7 @@ import { IPodcast } from "../../types/podcast";
 const Episodes = (episodes: IPodcast[] | null, source: string = "") => {
   return episodes
     ? episodes.map((episode) => (
-        <div className={`${source}__${episode.id}`}>
+        <div className={`${source}__${episode.id}`} key={episode.id}>
           <PodcastCard podcast={episode} isEpisode={true} source={source} />
         </div>
       ))

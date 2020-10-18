@@ -26,8 +26,6 @@ export const playerReducer: Reducer<IPlayer, IPlayerAction> = (
         action.payload.currentShow &&
         action.payload.episodes
       ) {
-        console.log(action.type);
-        console.log(action.payload);
         return {
           ...state,
           currentShow: action.payload.currentShow,
@@ -38,8 +36,6 @@ export const playerReducer: Reducer<IPlayer, IPlayerAction> = (
         return state;
       }
     case PlayerActionType.display:
-      console.log(action.type);
-      console.log(action.payload);
       if (action.payload && action.payload.displayEpisodesModal) {
         return {
           ...state,
