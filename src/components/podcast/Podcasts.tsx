@@ -1,20 +1,26 @@
-import React, { useContext } from 'react';
+import React from "react";
 
 import PodcastCard from "../card/PodcastCard";
 
 // Types
 import { IPodcast } from "../../types/podcast";
 
-const Podcasts = (shows: IPodcast[] | null) => {
-    return (
+const Podcasts = ({ podcasts }: { podcasts: IPodcast[] | null }) => {
+  return (
     <div className="category-podcast__container">
-        {shows ? shows.map(show => (
-        <div className={show.id}>
-            {PodcastCard(show, false)}
-        </div>
-        )) : null}
+      {podcasts
+        ? podcasts.map((podcast) => (
+            <div className={`category-podcast__${podcast.id}`} key={podcast.id}>
+              <PodcastCard
+                podcast={podcast}
+                isEpisode={false}
+                source={"category-podcast"}
+              />
+            </div>
+          ))
+        : null}
     </div>
-    );
-}
+  );
+};
 
 export default Podcasts;

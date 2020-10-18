@@ -11,11 +11,15 @@ import { getEpisodes } from "../../api/podcast";
 
 import podcastDefaultImg from "../../Img/podcast-default.jpg";
 
-const PodcastCard = (
-  podcast: IPodcast,
-  isEpisode: boolean = false,
-  source: string = ""
-) => {
+const PodcastCard = ({
+  podcast,
+  isEpisode = false,
+  source = ""
+}: {
+  podcast: IPodcast;
+  isEpisode: boolean;
+  source: string;
+}) => {
   const { dispatch } = useContext(playerStore);
   const displayImg = podcast.imageUrl || podcastDefaultImg;
 
@@ -45,7 +49,11 @@ const PodcastCard = (
 
   return podcast.title ? (
     <div className={`${source}__card`} onClick={onClickCard}>
-      <img className={`${source}__card-image`} src={displayImg} />
+      <img
+        className={`${source}__card-image`}
+        src={displayImg}
+        alt="podcast logo"
+      />
       <div className={`${source}__card-title`}>{podcast.title}</div>
     </div>
   ) : null;

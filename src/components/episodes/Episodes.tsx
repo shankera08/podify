@@ -6,7 +6,7 @@ const Episodes = (episodes: IPodcast[] | null, source: string = "") => {
   return episodes
     ? episodes.map((episode) => (
         <div className={`${source}__${episode.id}`}>
-          {PodcastCard(episode, true, source)}
+          <PodcastCard podcast={episode} isEpisode={true} source={source} />
         </div>
       ))
     : null;
