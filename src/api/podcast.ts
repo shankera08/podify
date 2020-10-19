@@ -1,6 +1,7 @@
+// external import
 import axios from "axios";
 
-// Types imports
+// Types
 import { IPodcast, ICuratedPodcasts } from "../types/podcast";
 import { IApiResponse } from "../types/api";
 
@@ -11,11 +12,18 @@ const showAPIUrl = (listId: string, limit: number) =>
 const episodesAPIUrl = (showId: string, limit: number) =>
   `https://api.spreaker.com/v2/shows/${showId}/episodes?limit=${limit}&sorting=oldest`;
 
+/**
+ *
+ * @param country string
+ * @param limit number of categories to fetch
+ * @returns list of podcast categories
+ */
 export const getCuratedList = async (
   country: string = "US",
   limit: number = 3
 ): Promise<IPodcast[] | null> => {
   try {
+    // get the curated list from Spreaker API
     const apiCallResp = await axios.get<IApiResponse>(
       curatedAPIUrl(country, limit)
     );
@@ -25,8 +33,6 @@ export const getCuratedList = async (
       !apiCallResp.data.response.items ||
       apiCallResp.data.response.items.length < 1
     ) {
-      console.log("heere");
-      console.log(apiCallResp.data.response.items.length);
       return null;
     }
 
@@ -45,12 +51,20 @@ export const getCuratedList = async (
   }
 };
 
+/**
+ *
+ * @param listId category Id from curated list
+ * @param listTitle category title
+ * @param limit number of shows to fetch for the given category
+ * @returns list of shows mapped to the given category
+ */
 export const getShows = async (
   listId: string,
   listTitle: string,
   limit: number = 10
 ): Promise<ICuratedPodcasts | null> => {
   try {
+    // get podcast shows form Spreaker API
     const apiCallResp = await axios.get<IApiResponse>(
       showAPIUrl(listId, limit)
     );
@@ -77,11 +91,18 @@ export const getShows = async (
   }
 };
 
+/**
+ *
+ * @param showId the podcast show Id from the podcast shows list
+ * @param limit number of episodes to fetch for the given show
+ * @returns list of episodes for the given show id
+ */
 export const getEpisodes = async (
   showId: string,
   limit: number = 10
 ): Promise<IPodcast[] | null> => {
   try {
+    // get the episodes for the given show id from Spreaker API
     const apiCallResp = await axios.get<IApiResponse>(
       episodesAPIUrl(showId, limit)
     );

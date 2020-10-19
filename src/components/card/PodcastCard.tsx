@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
 
+// Method for API Calls
+import { getEpisodes } from "../../api/podcast";
+
 // Types
 import { IPodcast } from "../../types/podcast";
 import { PlayerActionType } from "../../types/player";
 
-// Store
+// Global Store - Context API
 import { playerStore } from "../../store/player";
 
-import { getEpisodes } from "../../api/podcast";
-
-import podcastDefaultImg from "../../Img/podcast-default.jpg";
-
+// import local assets and css
+import podcastDefaultImg from "../../assets/Img/podcast-default.jpg";
 import "./style.css";
+
+/**
+ *
+ * @param {podcast} a podcast object for a show or an episode
+ * @return {JSX} returns the JSX for creating a single card of podcast object
+ */
 
 const PodcastCard = ({
   podcast,
@@ -22,9 +29,20 @@ const PodcastCard = ({
   isEpisode: boolean;
   source: string;
 }) => {
+  // get the dispatch method for the global state from the context api
   const { dispatch } = useContext(playerStore);
+
+  // set the display image for each card.
+  // replace with default image when missing in API.
   const displayImg = podcast.imageUrl || podcastDefaultImg;
 
+  // click handler for each card
+  // this will dispatch the appropriate action based on the type of card
+  // in case of an episode card, it will dispatch a play action
+  // play action will result in media player starting in play mode for that episode
+  // in case of a podcast card, first retrieves the episodes related to the podcast
+  // then dispatches the update action to store the episode list and the current podcast
+  // also set the modal's display to true, which brings up the modal with the episode list
   const onClickCard = () => {
     if (isEpisode) {
       dispatch({
