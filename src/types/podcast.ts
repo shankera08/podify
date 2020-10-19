@@ -1,22 +1,18 @@
-type IPodcastApiShow = {
-    show_id: string,
-    title: string,
-    site_url: string,
-    image_url: string,
-    image_original_url: string,
-    author_id: string
+export interface IPodcastApi {
+  list_id: string;
+  name: string;
+  subtitle: string;
+  type: string;
+  permalink: string;
 }
 
-export type IPodcastApiResponse = {
-    response: {
-        items: IPodcastApiShow[],
-        next_url?: string
-    }
+export interface IPodcast {
+  id: string;
+  authorId?: string;
+  title: string;
+  imageUrl?: string;
 }
 
-export type IPodcast = {
-    podcastId: string,
-    authorId: string,
-    title: string,
-    imageUrl: string
+export interface ICuratedPodcasts {
+  [category: string]: IPodcast[] | undefined;
 }
