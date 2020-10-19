@@ -2,9 +2,9 @@
 
 ## Overview
 
-This app lets the user listen to various podcasts made available by "Spreaker" API.<br /><br />
+This app lets the user listen to various podcasts made available by "Spreaker" API.<br />
 
-The app is built using React-Typescript.<br />
+This app is built using React-Typescript.<br />
 It utilizes the Context API and React Hooks for state management.<br />
 Currently only supports desktop.
 
