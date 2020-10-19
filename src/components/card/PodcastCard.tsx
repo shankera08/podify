@@ -11,7 +11,7 @@ import { PlayerActionType } from "../../types/player";
 import { playerStore } from "../../store/player";
 
 // import local assets and css
-import podcastDefaultImg from "../../assets/Img/podcast-default.jpg";
+import podcastDefaultImg from "../../assets/images/podcast-default.jpg";
 import "./style.css";
 
 /**
