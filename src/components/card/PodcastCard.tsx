@@ -11,6 +11,8 @@ import { getEpisodes } from "../../api/podcast";
 
 import podcastDefaultImg from "../../Img/podcast-default.jpg";
 
+import "./style.css";
+
 const PodcastCard = ({
   podcast,
   isEpisode = false,
@@ -48,13 +50,13 @@ const PodcastCard = ({
   };
 
   return podcast.title ? (
-    <div className={`${source}__card`} onClick={onClickCard}>
+    <div className={`${source} card`} onClick={onClickCard}>
       <img
-        className={`${source}__card-image`}
+        className={`${source} card-image`}
         src={displayImg}
         alt="podcast logo"
       />
-      <div className={`${source}__card-title`}>{podcast.title}</div>
+      <div className={`${source} card-title`}>{podcast.title}</div>
     </div>
   ) : null;
 };

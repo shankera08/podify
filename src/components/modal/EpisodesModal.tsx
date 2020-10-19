@@ -8,75 +8,90 @@ import { PlayerActionType } from "../../types/player";
 import "./style.css";
 
 const EpisodesModal = ({
-  modalRef
+    modalRef
 }: {
-  modalRef: React.RefObject<HTMLDivElement>;
+    modalRef: React.RefObject<HTMLDivElement>;
 }) => {
-  const playerState = useContext(playerStore);
-  const episodeModalRef = useRef<HTMLDivElement>(null);
+    const playerState = useContext(playerStore);
+    const episodeModalRef = useRef<HTMLDivElement>(null);
 
-  const onClose = () => {
-    if (episodeModalRef.current) {
-      episodeModalRef.current.style.display = "none";
-    }
-
-    playerState.dispatch({
-      type: PlayerActionType.display,
-      payload: {
-        displayEpisodesModal: false
-      }
-    });
-  };
-
-  useEffect(() => {
-    const onClickOutside = (event: MouseEvent) => {
-      const currentTarget = event.target as HTMLDivElement;
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(currentTarget) &&
-        !currentTarget.className.includes("episodes-modal__")
-      ) {
+    const onClose = () => {
         if (episodeModalRef.current) {
-          episodeModalRef.current.style.display = "none";
+            episodeModalRef.current.style.display = "none";
         }
+
         playerState.dispatch({
-          type: PlayerActionType.display,
-          payload: {
-            displayEpisodesModal: false
-          }
+            type: PlayerActionType.display,
+            payload: {
+                displayEpisodesModal: false
+            }
         });
-      }
     };
 
-    document.addEventListener("click", onClickOutside);
-    return () => {
-      document.removeEventListener("click", onClickOutside);
-    };
-  }, [modalRef, playerState]);
+    useEffect(() => {
+        const onClickOutside = (event: MouseEvent) => {
+            const currentTarget = event.target as HTMLDivElement;
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(currentTarget) &&
+                !currentTarget.className.includes("episodes-modal-content") &&
+                !currentTarget.className.includes("player")
+            ) {
+                if (episodeModalRef.current) {
+                    episodeModalRef.current.style.display = "none";
+                }
+                playerState.dispatch({
+                    type: PlayerActionType.display,
+                    payload: {
+                        displayEpisodesModal: false
+                    }
+                });
+            }
+        };
 
-  useEffect(() => {
-    if (episodeModalRef.current && playerState.state.displayEpisodesModal) {
-      episodeModalRef.current.style.display = "inline-block";
-    }
-  }, [playerState.state.displayEpisodesModal, playerState.state.episodes]);
+        document.addEventListener("click", onClickOutside);
+        return () => {
+            document.removeEventListener("click", onClickOutside);
+        };
+    }, [modalRef, playerState]);
 
-  return playerState.state.displayEpisodesModal ? (
-    <div className="episodes-modal" ref={episodeModalRef}>
-      <div className="episodes-modal__container">
-        <span className="episodes-modal__close" onClick={onClose}>
-          &times;
-        </span>
-        <div className="episodes-modal__title">
-          {playerState.state.currentShow && playerState.state.currentShow.title}
+    useEffect(() => {
+        if (episodeModalRef.current && playerState.state.displayEpisodesModal) {
+            episodeModalRef.current.style.display = "flex";
+        }
+    }, [playerState.state.displayEpisodesModal, playerState.state.episodes]);
+
+    return playerState.state.displayEpisodesModal ? (
+        <div className="episodes-modal-background" ref={episodeModalRef}>
+            <div className="episodes-modal-content__container">
+                <div className="episodes-modal-content__header">
+                    <div className="episodes-modal-content__title">
+                        <div className="episodes-model-content__heading">
+                            {playerState.state.currentShow &&
+                                playerState.state.currentShow.title}
+                        </div>
+                        <div className="episodes-modal-content__subheading">
+                            Episodes
+                        </div>
+                    </div>
+                    <div
+                        className="episodes-modal-content__close"
+                        onClick={onClose}
+                    >
+                        <i className="episodes-modal-content__close-icon fas fa-times"></i>
+                    </div>
+                </div>
+                {playerState.state.episodes ? (
+                    <div className="episodes-modal-content__list">
+                        {Episodes(
+                            playerState.state.episodes,
+                            "episodes-modal-content"
+                        )}
+                    </div>
+                ) : null}
+            </div>
         </div>
-        {playerState.state.episodes ? (
-          <div className="episodes-modal__list">
-            {Episodes(playerState.state.episodes, "episodes-modal")}
-          </div>
-        ) : null}
-      </div>
-    </div>
-  ) : null;
+    ) : null;
 };
 
 export default EpisodesModal;

@@ -3,13 +3,11 @@ import PodcastCard from "../card/PodcastCard";
 import { IPodcast } from "../../types/podcast";
 
 const Episodes = (episodes: IPodcast[] | null, source: string = "") => {
-  return episodes
-    ? episodes.map((episode) => (
-        <div className={`${source}__${episode.id}`} key={episode.id}>
-          <PodcastCard podcast={episode} isEpisode={true} source={source} />
-        </div>
-      ))
-    : null;
+    return episodes
+        ? episodes.map((episode) => (
+              <PodcastCard podcast={episode} isEpisode={true} source={source} />
+          ))
+        : null;
 };
 
 export default Episodes;

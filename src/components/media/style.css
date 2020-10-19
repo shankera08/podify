@@ -4,17 +4,23 @@
     text-align: left;
     color: red;
     font-size: 40px;
-  }
+    z-index: 10;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
 
-  .player__icons {
+.player__icons {
     display: flex;
     margin: 10px;
-  }
+}
 
-  .player__icons-play, .player__icons-pause {
+.player__icons-play,
+.player__icons-pause {
     padding: 10px;
-  }
+}
 
-  .player__title {
-      padding: 20px;
-  }
+.player__title {
+    padding: 20px;
+}
